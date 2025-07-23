@@ -9,7 +9,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ### 🔁 Core Features
 - ✅ Live queue creation
-- 🔲 Join queue functionality
+- ✅ Join queue functionality
 - 🔲 Leave/reset queue
 - 🔲 Real-time sync across clients
 
