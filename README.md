@@ -5,7 +5,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 ### 🔧 Setup
 - ✅ Initialize project (Next.js + Tailwind CSS + TS)
 - ✅ Firebase project setup and config file
-- 🔲 Connect to Firebase Realtime DB
+- ✅ Connect to Firebase Realtime DB
 
 ### 🔁 Core Features
 - 🔲 Live queue creation
