@@ -17,7 +17,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 ### 🧩 Components
 - ✅ <LandingJoin /> (centered code input, join button, branding)
 - 🔲 <Footer /> (Add your business, About, Privacy, Terms)
-- 🔲 <QueueView /> (shows queue after joining, real-time updates)
+- ✅ <QueueView /> (shows queue after joining, real-time updates)
 - 🔲 (Optional) <NamePrompt /> (if you want to collect user names)
 
 ### 🎨 UI Polish
