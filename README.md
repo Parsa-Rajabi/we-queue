@@ -8,19 +8,21 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 - ✅ Connect to Firebase Realtime DB
 
 ### 🔁 Core Features
-- ✅ Live queue creation
-- ✅ Join queue functionality
-- ✅ Leave/reset queue
-- ✅ Real-time sync across clients
+- ✅ Live queue creation (business/owner flow, not on landing)
+- ✅ Join queue by 4-character code (landing page)
+- 🔲 (Optional) Prompt for name after code entry (if desired)
+- 🔲 Show error if code is invalid
+- 🔲 No login/auth required for users
 
 ### 🧩 Components
-- ✅ <JoinForm /> for entering the queue
-- ✅ <QueueCard /> to display each entry
-- ✅ <QueueList /> with real-time updates
+- ✅ <LandingJoin /> (centered code input, join button, branding)
+- 🔲 <Footer /> (Add your business, About, Privacy, Terms)
+- 🔲 <QueueView /> (shows queue after joining, real-time updates)
+- 🔲 (Optional) <NamePrompt /> (if you want to collect user names)
 
 ### 🎨 UI Polish
-- 🔲 Mobile-first layout
-- 🔲 CSS animations or framer-motion
+- 🔲 Match Google Lineup’s whitespace, centering, and color scheme
+- 🔲 Responsive/mobile-first layout
 - 🔲 Accessibility and keyboard navigation
 - 🔲 Basic metadata and favicon
 
