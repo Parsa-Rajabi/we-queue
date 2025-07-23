@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { db } from "../firebase";
-import { ref, onValue, off, get } from "firebase/database";
+import { ref, onValue, off, get, DataSnapshot } from "firebase/database";
 import QueueList from "./QueueList";
 
 export default function QueueView({ code, onBack }: { code: string; onBack: () => void }) {
@@ -16,7 +16,7 @@ export default function QueueView({ code, onBack }: { code: string; onBack: () =
       setLoading(false);
     });
     const entriesRef = ref(db, `queues/${code}/entries`);
-    const handleValue = (snapshot: any) => {
+    const handleValue = (snapshot: DataSnapshot) => {
       setEntries(snapshot.val() || {});
     };
     onValue(entriesRef, handleValue);

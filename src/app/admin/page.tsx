@@ -27,7 +27,7 @@ export default function AdminPage() {
     try {
       await set(queueRef, queueData);
       setQueueId(newQueueId);
-    } catch (err) {
+    } catch {
       setError("Failed to create queue.");
     } finally {
       setCreating(false);
