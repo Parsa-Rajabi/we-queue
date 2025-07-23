@@ -11,7 +11,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 - ✅ Live queue creation
 - ✅ Join queue functionality
 - ✅ Leave/reset queue
-- 🔲 Real-time sync across clients
+- ✅ Real-time sync across clients
 
 ### 🧩 Components
 - 🔲 <JoinForm /> for entering the queue

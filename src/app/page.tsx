@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { db } from '../firebase';
-import { ref, set, get, update, remove } from 'firebase/database';
+import { ref, set, get, update, remove, onValue, off } from 'firebase/database';
 
 function generateQueueId() {
   return Math.random().toString(36).substring(2, 10);
@@ -32,6 +32,9 @@ export default function Home() {
   const [resetStatus, setResetStatus] = useState<null | 'success' | 'error'>(null);
   const [resetError, setResetError] = useState<string | null>(null);
 
+  // Real-time queue entries
+  const [queueEntries, setQueueEntries] = useState<{ [userId: string]: { name: string; joinedAt: number } } | null>(null);
+
   useEffect(() => {
     const testRef = ref(db, 'testConnection');
     set(testRef, 'hello world')
@@ -46,6 +49,21 @@ export default function Home() {
       })
       .catch(() => setFirebaseStatus('error'));
   }, []);
+
+  // Real-time sync for queue entries
+  useEffect(() => {
+    if (!joinQueueId) {
+      setQueueEntries(null);
+      return;
+    }
+    const entriesRef = ref(db, `queues/${joinQueueId}/entries`);
+    const handleValue = (snapshot: any) => {
+      const val = snapshot.val();
+      setQueueEntries(val || {});
+    };
+    onValue(entriesRef, handleValue);
+    return () => off(entriesRef, 'value', handleValue);
+  }, [joinQueueId]);
 
   const handleCreateQueue = async () => {
     setCreating(true);
@@ -211,6 +229,24 @@ export default function Home() {
           <div className="text-red-600">{resetError}</div>
         )}
       </div>
+
+      {/* Real-time queue entries list */}
+      {queueEntries && (
+        <div className="mt-8 w-full max-w-md">
+          <h3 className="text-lg font-semibold mb-2 text-center">Current Queue</h3>
+          <ul className="bg-gray-900 rounded p-4">
+            {Object.entries(queueEntries).length === 0 && (
+              <li className="text-gray-400">Queue is empty.</li>
+            )}
+            {Object.entries(queueEntries).map(([userId, entry]) => (
+              <li key={userId} className="py-1 border-b border-gray-800 last:border-b-0 flex justify-between">
+                <span className="font-mono">{entry.name}</span>
+                <span className="text-xs text-gray-500">{userId}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </main>
   );
 }
