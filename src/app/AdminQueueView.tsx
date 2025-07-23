@@ -34,14 +34,14 @@ export default function AdminQueueView({ queueId }: { queueId: string }) {
   return (
     <div className="w-full max-w-md mt-4">
       <h3 className="text-lg font-semibold mb-2 text-center">Current Queue</h3>
-      <ul className="bg-gray-900 rounded p-4">
+      <ul className="bg-gray-100 rounded p-4">
         {Object.entries(entries).length === 0 && (
           <li className="text-gray-400">Queue is empty.</li>
         )}
         {Object.entries(entries).map(([userId, entry]) => (
-          <li key={userId} className="py-1 border-b border-gray-800 last:border-b-0 flex justify-between items-center">
-            <span className="font-mono text-base">{entry.name ? entry.name : userId}</span>
-            <span className="text-xs text-gray-300 ml-2">{userId}</span>
+          <li key={userId} className="py-1 border-b border-gray-300 last:border-b-0 flex justify-between items-center">
+            <span className="font-mono text-base text-gray-900">{entry.name ? entry.name : userId}</span>
+            <span className="text-xs text-gray-500 ml-2">{userId}</span>
             <button
               className="ml-4 px-2 py-1 bg-red-500 text-white rounded text-xs hover:bg-red-600 disabled:opacity-50"
               onClick={() => handleRemoveUser(userId)}
