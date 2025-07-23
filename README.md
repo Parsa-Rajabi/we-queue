@@ -14,7 +14,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 - ✅ Real-time sync across clients
 
 ### 🧩 Components
-- 🔲 <JoinForm /> for entering the queue
+- ✅ <JoinForm /> for entering the queue
 - 🔲 <QueueCard /> to display each entry
 - 🔲 <QueueList /> with real-time updates
 
