@@ -54,18 +54,18 @@ export default function QueueView({ code, userId, onBack }: { code: string; user
           {sortedEntries.map(([id, entry], idx) => (
             <li
               key={id}
-              className={`py-1 border-b border-gray-800 last:border-b-0 flex justify-between items-center ${userId === id ? "bg-teal-700 text-white rounded" : ""}`}
+              className={`py-1 border-b border-gray-800 last:border-b-0 flex justify-between items-center ${userId === id ? "bg-teal-700 text-white rounded font-bold" : ""}`}
             >
-              <span className="font-mono">{entry.name || id}</span>
-              <span className="text-xs text-gray-500">{id}</span>
+              <span className="font-mono text-base">{entry.name ? entry.name : id}</span>
+              <span className="text-xs text-gray-300 ml-2">{id}</span>
               {userId === id && (
-                <span className="ml-2 text-xs font-bold">You ({idx + 1}{getOrdinal(idx + 1)})</span>
+                <span className="ml-2 text-lg font-bold text-yellow-300 animate-pulse">You ({idx + 1}{getOrdinal(idx + 1)})</span>
               )}
             </li>
           ))}
         </ul>
         {userId && userPosition > 0 && (
-          <div className="mt-4 text-center text-lg font-semibold text-teal-700">You are #{userPosition} in line</div>
+          <div className="mt-6 text-center text-2xl font-bold text-teal-700 bg-yellow-100 rounded p-2 shadow">You are #{userPosition} in line</div>
         )}
       </div>
       {onBack && <button className="mt-8 px-4 py-2 bg-teal-400 rounded text-black font-bold" onClick={onBack}>Back</button>}
