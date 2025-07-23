@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { db } from '../firebase';
-import { ref, set, get, update } from 'firebase/database';
+import { ref, set, get, update, remove } from 'firebase/database';
 
 function generateQueueId() {
   return Math.random().toString(36).substring(2, 10);
@@ -25,6 +25,12 @@ export default function Home() {
   const [joinStatus, setJoinStatus] = useState<null | 'success' | 'error'>(null);
   const [joinError, setJoinError] = useState<string | null>(null);
   const [joinedUserId, setJoinedUserId] = useState<string | null>(null);
+
+  // Leave/reset state
+  const [leaveStatus, setLeaveStatus] = useState<null | 'success' | 'error'>(null);
+  const [leaveError, setLeaveError] = useState<string | null>(null);
+  const [resetStatus, setResetStatus] = useState<null | 'success' | 'error'>(null);
+  const [resetError, setResetError] = useState<string | null>(null);
 
   useEffect(() => {
     const testRef = ref(db, 'testConnection');
@@ -88,6 +94,43 @@ export default function Home() {
     }
   };
 
+  const handleLeaveQueue = async () => {
+    setLeaveStatus(null);
+    setLeaveError(null);
+    if (!joinQueueId || !joinedUserId) {
+      setLeaveStatus('error');
+      setLeaveError('Missing queue ID or user ID.');
+      return;
+    }
+    const entryRef = ref(db, `queues/${joinQueueId}/entries/${joinedUserId}`);
+    try {
+      await remove(entryRef);
+      setLeaveStatus('success');
+      setJoinedUserId(null);
+    } catch (err) {
+      setLeaveStatus('error');
+      setLeaveError('Failed to leave queue.');
+    }
+  };
+
+  const handleResetQueue = async () => {
+    setResetStatus(null);
+    setResetError(null);
+    if (!joinQueueId) {
+      setResetStatus('error');
+      setResetError('Missing queue ID.');
+      return;
+    }
+    const entriesRef = ref(db, `queues/${joinQueueId}/entries`);
+    try {
+      await set(entriesRef, {});
+      setResetStatus('success');
+    } catch (err) {
+      setResetStatus('error');
+      setResetError('Failed to reset queue.');
+    }
+  };
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-8">
       <h1 className="text-2xl font-bold mb-4">We Queue</h1>
@@ -139,6 +182,35 @@ export default function Home() {
           <div className="mt-2 text-red-600">{joinError}</div>
         )}
       </form>
+
+      <div className="mt-8 flex flex-col items-center gap-2">
+        <button
+          className="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700"
+          onClick={handleLeaveQueue}
+          disabled={!joinedUserId}
+        >
+          Leave Queue
+        </button>
+        {leaveStatus === 'success' && (
+          <div className="text-yellow-600">You have left the queue.</div>
+        )}
+        {leaveStatus === 'error' && leaveError && (
+          <div className="text-red-600">{leaveError}</div>
+        )}
+        <button
+          className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 mt-2"
+          onClick={handleResetQueue}
+          disabled={!joinQueueId}
+        >
+          Reset Queue (Clear All Entries)
+        </button>
+        {resetStatus === 'success' && (
+          <div className="text-red-600">Queue has been reset.</div>
+        )}
+        {resetStatus === 'error' && resetError && (
+          <div className="text-red-600">{resetError}</div>
+        )}
+      </div>
     </main>
   );
 }
