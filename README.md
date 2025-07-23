@@ -8,7 +8,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 - ✅ Connect to Firebase Realtime DB
 
 ### 🔁 Core Features
-- 🔲 Live queue creation
+- ✅ Live queue creation
 - 🔲 Join queue functionality
 - 🔲 Leave/reset queue
 - 🔲 Real-time sync across clients
