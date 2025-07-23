@@ -40,7 +40,8 @@ export default function AdminQueueView({ queueId }: { queueId: string }) {
         )}
         {Object.entries(entries).map(([userId, entry]) => (
           <li key={userId} className="py-1 border-b border-gray-800 last:border-b-0 flex justify-between items-center">
-            <span className="font-mono">{entry.name || userId}</span>
+            <span className="font-mono text-base">{entry.name ? entry.name : userId}</span>
+            <span className="text-xs text-gray-300 ml-2">{userId}</span>
             <button
               className="ml-4 px-2 py-1 bg-red-500 text-white rounded text-xs hover:bg-red-600 disabled:opacity-50"
               onClick={() => handleRemoveUser(userId)}
