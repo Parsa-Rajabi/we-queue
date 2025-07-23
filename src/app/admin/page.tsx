@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { db } from "../../firebase";
 import { ref, set } from "firebase/database";
+import QRCode from "../QRCode";
 
 function generateQueueId() {
   // 4-character alphanumeric code
@@ -48,7 +49,9 @@ export default function AdminPage() {
         <div className="flex flex-col items-center gap-4">
           <div className="text-lg">Queue code:</div>
           <div className="text-3xl font-mono font-bold text-teal-600">{queueId}</div>
-          <div className="mt-4">[QR code placeholder]</div>
+          <div className="mt-4">
+            <QRCode value={`https://yourdomain.com/?code=${queueId}`} />
+          </div>
           <div className="mt-4">[Admin controls coming soon]</div>
         </div>
       )}
