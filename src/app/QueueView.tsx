@@ -47,22 +47,32 @@ export default function QueueView({ code, userId, onBack }: { code: string; user
       <h2 className="text-2xl font-bold mb-4">Queue: <span className="font-mono">{code}</span></h2>
       <div className="w-full max-w-md mt-4">
         <h3 className="text-lg font-semibold mb-2 text-center">Current Queue</h3>
-        <ul className="bg-gray-900 rounded p-4">
+        <ul className="bg-gray-100 rounded p-4">
           {sortedEntries.length === 0 && (
             <li className="text-gray-400">Queue is empty.</li>
           )}
-          {sortedEntries.map(([id, entry], idx) => (
-            <li
-              key={id}
-              className={`py-1 border-b border-gray-800 last:border-b-0 flex justify-between items-center ${userId === id ? "bg-teal-700 text-white rounded font-bold" : ""}`}
-            >
-              <span className="font-mono text-base">{entry.name ? entry.name : id}</span>
-              <span className="text-xs text-gray-300 ml-2">{id}</span>
-              {userId === id && (
-                <span className="ml-2 text-lg font-bold text-yellow-300 animate-pulse">You ({idx + 1}{getOrdinal(idx + 1)})</span>
-              )}
-            </li>
-          ))}
+          {sortedEntries.map(([id, entry], idx) => {
+            const isCurrentUser = userId === id;
+            const joinedAt = entry.joinedAt || 0;
+            const now = Date.now();
+            const seconds = Math.floor((now - joinedAt) / 1000);
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            const estWait = (idx) * 5;
+            return (
+              <li
+                key={id}
+                className={`py-1 border-b border-gray-300 last:border-b-0 flex justify-between items-center ${isCurrentUser ? "bg-teal-700 text-white rounded font-bold" : ""}`}
+              >
+                <span className="font-mono text-base text-gray-900">{entry.name ? entry.name : id}</span>
+                {isCurrentUser ? (
+                  <span className="ml-2 text-xs font-bold text-yellow-500 animate-pulse">{mins}:{secs.toString().padStart(2, '0')} elapsed</span>
+                ) : (
+                  <span className="ml-2 text-xs text-gray-500">~{estWait} min wait</span>
+                )}
+              </li>
+            );
+          })}
         </ul>
         {userId && userPosition > 0 && (
           <div className="mt-6 text-center text-2xl font-bold text-teal-700 bg-yellow-100 rounded p-2 shadow">You are #{userPosition} in line</div>
