@@ -3,6 +3,7 @@ import { useState } from "react";
 import { db } from "../../firebase";
 import { ref, set } from "firebase/database";
 import QRCode from "../QRCode";
+import AdminQueueView from "../AdminQueueView";
 
 function generateQueueId() {
   // 4-character alphanumeric code
@@ -52,7 +53,7 @@ export default function AdminPage() {
           <div className="mt-4">
             <QRCode value={`https://we-queue.onrender.com/?code=${queueId}`} />
           </div>
-          <div className="mt-4">[Admin controls coming soon]</div>
+          <AdminQueueView queueId={queueId} />
         </div>
       )}
       {error && <div className="mt-4 text-red-600">{error}</div>}
