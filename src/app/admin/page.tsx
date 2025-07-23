@@ -50,7 +50,7 @@ export default function AdminPage() {
           <div className="text-lg">Queue code:</div>
           <div className="text-3xl font-mono font-bold text-teal-600">{queueId}</div>
           <div className="mt-4">
-            <QRCode value={`https://yourdomain.com/?code=${queueId}`} />
+            <QRCode value={`https://we-queue.onrender.com/?code=${queueId}`} />
           </div>
           <div className="mt-4">[Admin controls coming soon]</div>
         </div>
